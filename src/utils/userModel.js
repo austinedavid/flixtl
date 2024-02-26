@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 // creating user schema
 const user = new mongoose.Schema(
   {
-    name: {
+    username: {
       type: String,
       require: true,
     },
@@ -11,16 +11,22 @@ const user = new mongoose.Schema(
       require: true,
       unique: true,
     },
+    isadmin: {
+      type: Boolean,
+      require: true,
+      default: false,
+    },
+    origin: {
+      type: String,
+      require: true,
+    },
+    isactive: {
+      type: Boolean,
+      default: true,
+      require: true,
+    },
   },
   { timestamps: true }
 );
-
-let userModel;
-
-try {
-  userModel = mongoose.model("User");
-} catch (e) {
-  userModel = mongoose.model("User", user);
-}
-
-export default userModel;
+// removed the try and catch block and replaced it with this
+export default mongoose.models.USER || mongoose.model("USER", user);
