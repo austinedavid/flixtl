@@ -2,28 +2,38 @@ import mongoose from "mongoose";
 // creating user schema
 const user = new mongoose.Schema(
   {
-    username: {
+    userusername: {
       type: String,
-      require: true,
+      required: true,
+      unique: true,
+      min: 3,
+      max: 20,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
       unique: true,
     },
-    isadmin: {
+    password: {
+      type: String,
+      required: true,
+    },
+    img: {
+      type: String,
+    },
+    isAdmin: {
       type: Boolean,
-      require: true,
       default: false,
     },
-    origin: {
-      type: String,
-      require: true,
-    },
-    isactive: {
+    isActive: {
       type: Boolean,
       default: true,
-      require: true,
+    },
+    phone: {
+      type: String,
+    },
+    address: {
+      type: String,
     },
   },
   { timestamps: true }
