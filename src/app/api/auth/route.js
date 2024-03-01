@@ -7,9 +7,10 @@ import userModel from "@/utils/userModel";
 export async function POST(request) {
   // initiating the db connection below
   await dbConnection();
-  const { username, password, email, img, isAdmin, isActive, phone, address } = await request.json();
-  console.log(username, password, email, img, isAdmin, isActive, phone, address);
-  if (!username || !password || !email || !img || !isAdmin || !isActive || !phone || !address) {
+  const alldata = await request.json();
+  const { username, password, email } = alldata;
+
+  if (!username || !password || !email) {
     return new Response(
       JSON.stringify({ message: "bothing input are required" }),
       { status: 400, statusText: "failed to provide required inputs" }
@@ -17,7 +18,7 @@ export async function POST(request) {
   }
   try {
     // creating new instance of a user
-    const createUser = new userModel({ username, password, email, img, isAdmin, isActive, phone, address });
+    const createUser = new userModel(alldata);
     // saving to the database
     const savedUser = await createUser.save();
     return new Response(JSON.stringify(savedUser), {
